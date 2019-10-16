@@ -2,6 +2,7 @@ package com.spring.primerspringboot.models;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -9,9 +10,13 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.PrePersist;
 import javax.validation.constraints.NotNull;
 
 import org.omg.CORBA.PRIVATE_MEMBER;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonProperty.Access;
 
 @Entity
 public class Cliente {
@@ -27,13 +32,26 @@ public class Cliente {
 	private String nombre;
 	private String ciudad;
 	
-	@OneToMany(mappedBy = "cliente")
+
+	// CascadeType.PERSIST ---> solo cuando guarde en base de datos,hace cascada y guarda tambien las facturas pertinentes.
+	// CascadeType.ALL ---> en todos los casos (delete,create, update..)
+	// .MERGE --> en update solo
+
+	@OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL)
+	// Esto de abajo para que no se muestren las facturas cuando haga query de cliente (para quitar loop infinito)
+	
+ 	@JsonProperty(access = Access.WRITE_ONLY)
 	private List<Factura> facturas;
 	
-	@OneToOne()
-	@JoinColumn(name="dni_id", nullable = false)
-	private Dni dni;
+//	@OneToOne()
+//	@JoinColumn(name="dni_id", nullable = false)
+//	private Dni dni;
 	
+	// ANTES DE GUARDAR, VE A TABLA FACTURAS Y GUARDA ESTE CLIENTE:
+//	@PrePersist
+//	public void persistFactura() {
+//		facturas.forEach(factura -> factura.setCliente(this));
+//	}
 
 	// constructor para getter y setters:
 	public Cliente() {

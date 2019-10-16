@@ -1,11 +1,13 @@
 package com.spring.primerspringboot.models;
 
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.validation.constraints.Min;
 
+@Entity
 public class Dni {
 	
 	@Id
@@ -15,8 +17,8 @@ public class Dni {
 	@Min(value = 9)
 	private String numeroDni;
 	
-	@OneToOne(mappedBy = "dni")
-	private Cliente cliente;
+//	@OneToOne(mappedBy = "dni")
+//	private Cliente cliente;
 	
 
 }

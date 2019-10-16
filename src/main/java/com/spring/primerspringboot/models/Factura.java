@@ -1,5 +1,5 @@
 package com.spring.primerspringboot.models;
-
+import javax.persistence.Entity;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Entity;
@@ -10,6 +10,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.PostLoad;
 import javax.persistence.PrePersist;
 
 @Entity
@@ -22,7 +23,7 @@ public class Factura {
 
 	// Aquí almacenamos el id del cliente (clave ajena)
 	@ManyToOne
-	@JoinColumn(name = "cliente_id", nullable = false)
+	@JoinColumn(name = "cliente_id")
 	private Cliente cliente;// <---- este cliente es el mismo nombre de mappedBy
 
 	
@@ -30,7 +31,7 @@ public class Factura {
 	// @JoinTable es para crear una nueva tabla con los ids de facturas relacionados con productos
 	@ManyToMany
 	@JoinTable(
-			name = "PRODUCTOS-FACTURAS",
+			name = "productos_facturas",
 			joinColumns = @JoinColumn(name = "factura_id"),
 			inverseJoinColumns = @JoinColumn(name = "producto_id")
 			)
@@ -42,13 +43,13 @@ public class Factura {
 	public void setFecha() {
 		date = new Date();
 	}
-
+	
 	public Factura(Integer id, Date date, Cliente cliente, List<Producto> productos) {
 		super();
 		this.id = id;
 		this.date = date;
 		this.cliente = cliente;
-//		this.productos = productos;
+        this.productos = productos;
 	}
 
 	public Factura() {
@@ -77,10 +78,10 @@ public class Factura {
 	public void setCliente(Cliente cliente) {
 		this.cliente = cliente;
 	}
-//
-//	public List<Producto> getProductos() {
-//		return productos;
-//	}
+    
+	public List<Producto> getProductos() {
+        return productos;
+    }
 //
 //	public void setProductos(List<Producto> productos) {
 //		this.productos = productos;
