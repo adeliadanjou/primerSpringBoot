@@ -43,9 +43,9 @@ public class Cliente {
  	@JsonProperty(access = Access.WRITE_ONLY)
 	private List<Factura> facturas;
 	
-//	@OneToOne()
-//	@JoinColumn(name="dni_id", nullable = false)
-//	private Dni dni;
+	@OneToOne()
+	@JoinColumn(name="dni_id")
+	private Dni dni;
 	
 	// ANTES DE GUARDAR, VE A TABLA FACTURAS Y GUARDA ESTE CLIENTE:
 //	@PrePersist

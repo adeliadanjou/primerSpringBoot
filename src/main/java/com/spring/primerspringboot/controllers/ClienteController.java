@@ -37,8 +37,6 @@ public class ClienteController {
 		return clienteService.getOne(client_id);
 	}
 	
-	
-	
 	// CREA CLIENTES O LOS MODIFICA SI VIENE CON ID
 	@PostMapping("/create")
 	public ResponseEntity<Cliente> saveCliente(@RequestBody @Valid Cliente cliente){
